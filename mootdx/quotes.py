@@ -422,12 +422,12 @@ class ExtQuotes(object):
         '''
         with self.client.connect(*self.bestip):
             count = self.client.get_instrument_count()
-            pages = math.ceil(count / 100)
+            pages = math.ceil(count / 500)
             result = []
 
             for page in tqdm(range(0, pages)):
                 result += self.client.get_instrument_info(
-                    page * 100, (page + 1) * 100)
+                    page * 500, 500)
 
             return to_data(result)
 
@@ -486,7 +486,7 @@ class ExtQuotes(object):
         '''
         market, symbol = self.validate(market, symbol)
         with self.client.connect(*self.bestip):
-            result = self.client.get_instrument_bars(frequency=frequency,
+            result = self.client.get_instrument_bars(category=frequency,
                                                      market=market,
                                                      code=symbol,
                                                      start=start,
